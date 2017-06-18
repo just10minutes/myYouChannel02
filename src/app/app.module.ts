@@ -5,24 +5,33 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {YouTubeApi} from "../shared/youtubeapi.service";
+import {YouTubeApi3} from "../shared/youtubeapi3.service";
 import { YoutubePlayerModule } from 'ng2-youtube-player';
 import {MyApp} from './app.component';
-import {HomePage,VideoPage} from '../pages/pages';
+import {HomePage,VideoPage,FavouritePage} from '../pages/pages';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
-    MyApp, HomePage,VideoPage
+    MyApp, HomePage,VideoPage,FavouritePage
   ],
   imports: [
-    HttpModule, BrowserModule,YoutubePlayerModule, IonicModule.forRoot(MyApp)
+    HttpModule, BrowserModule,YoutubePlayerModule, IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot({
+      name: '__youchannel',
+      driverOrder: ['sqlite', 'indexeddb', 'websql']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, HomePage,VideoPage
+    MyApp, HomePage,VideoPage,FavouritePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    SocialSharing,
+    YouTubeApi3,    
     YouTubeApi, {
       provide: ErrorHandler,
       useClass: IonicErrorHandler

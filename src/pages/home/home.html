@@ -1,25 +1,30 @@
 <ion-header>
   <ion-navbar no-padding color="no">
-    <img [src]="channelInfo?channelInfo.brandingSettings.image.bannerImageUrl:''" alt="Banner">
-    <img class="profile-pic" [src]="channelInfo?channelInfo.snippet.thumbnails.default.url:''" alt="Profile">
+    <h4> {{errorMsg}} </h4>
+    <img class="banner" [src]="channelInfo?channelInfo.brandingSettings.image.bannerImageUrl:''" alt="Banner">
+    <img class="profile-pic" [src]="channelInfo?channelInfo.snippet.thumbnails.default.url:''" alt="Profile">    
 
   </ion-navbar>
 </ion-header>
 
 
-<ion-content class="cards-bg">
+<ion-content class="cards-bg">  
   <ion-fab top right edge>
     <button ion-fab mini><ion-icon name="more"></ion-icon></button>
     <ion-fab-list>
       <button ion-fab><ion-icon name="information-circle"></ion-icon></button>
-      <button ion-fab><ion-icon name="star"></ion-icon></button>
+      <button ion-fab (click)="favouritePage()"><ion-icon name="star"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
+  
 
   <ion-card *ngFor="let video of videos">
-
-    <img [src]="video.snippet.thumbnails.high.url" />
-
+    <div *ngFor="let videoDetails of video.extra"> 
+    <div class="sixteen-nine">
+      <div class="content169">
+        <img [src]="video.snippet.thumbnails.high.url" />
+      </div>
+    </div>
     <ion-card-content>
       <ion-card-title>
         {{video.snippet.title}}
@@ -31,7 +36,8 @@
 
     <ion-row no-padding>
       <ion-col>
-        <button ion-button clear small color="danger" icon-left>
+        <!-- <button ion-button clear small color="danger" icon-left (click)="favouriteSet(video.id.videoId,video.snippet.title)">-->
+        <button ion-button clear small color="danger" icon-left (click)="favouriteSet2(video)">
           <ion-icon name='star'></ion-icon>
           Favorite
         </button>
@@ -43,13 +49,13 @@
         </button>
       </ion-col>
       <ion-col text-right>
-        <button ion-button clear small color="danger" icon-left>
-          <ion-icon name='share-alt'></ion-icon>
-          Share
+        <button ion-button clear small color="danger" icon-left (click)="shareInfo(video.snippet.title,video.id.videoId)">
+          <ion-icon name='share-alt'></ion-icon>  
+            Share
         </button>
       </ion-col>
     </ion-row>
-
+  </div> 
   </ion-card>
 
   <button *ngIf="pageToken" ion-button full color="primary" (click)="loadMore()" icon-right>
