@@ -16,6 +16,7 @@ export class HomePage {
   errorMsg :any;
   isFavExists:boolean;
   fav : any;
+  favList: string;
   
   constructor(public navCtrl : NavController, public ytapi : YouTubeApi, public ytapi3 : YouTubeApi3, private socialSharing: SocialSharing, public storage: Storage) {   
 
@@ -49,6 +50,7 @@ export class HomePage {
       },
       _listError => this.errorMsg = _listError );
      
+    
 
   }
 
@@ -99,19 +101,31 @@ export class HomePage {
   favouriteSet2(_video){
       this.storage.get('myFav').then((data) => {
       this.fav = _video
+      console.log(this.fav)
       if(data != null)
-      {         
-        data.push((this.fav));
-        this.storage.set('myFav', data);
-        
-      }
+        { 
+          //Create a new list everytime you add a fav
+          let favList = [];
+          for (let x of data) {          
+            favList.push(x["id"].videoId);                   
+          }
+           //Verify the new videoID already part of existing list
+            if (favList.some(x => x === this.fav.id.videoId)){
+              alert ("This Video is Already part of your Favorite List")
+            }
+            else {
+            data.push((this.fav));
+            this.storage.set('myFav', data);
+            }
+          
+        }
       else
-      {
-        let array = [];
-        array.push((this.fav));
-        this.storage.set('myFav', array);
-       
-      }    
+        {
+          let array = [];
+          array.push((this.fav));
+          this.storage.set('myFav', array);
+        
+        }    
     });
 }
 /*
