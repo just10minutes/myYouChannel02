@@ -9,26 +9,63 @@
 <ion-content>
   <ion-card>
     <youtube-player [playerVars]="playerVars" [width]="'100%'" [protocol]="'https'" [videoId]="video.id.videoId" (ready)="savePlayer($event)" (change)="onStateChange($event)"></youtube-player>
-    <ion-card-content>
-      <p>
-        {{video.snippet.description}}
-      </p>
-    </ion-card-content>
     <ion-row no-padding>
-      <ion-col>
-        <button ion-button clear small color="danger" icon-left>
+      <ion-col col-4>
+        <button ion-button clear small color="danger" icon-left (click)="favouriteSet2(video)">
           <ion-icon name='star'></ion-icon>
           Favorite
         </button>
       </ion-col>
 
-      <ion-col text-right>
-        <button ion-button clear small color="danger" icon-left>
-          <ion-icon name='share-alt'></ion-icon>
-          Share
+      <ion-col col-4 text-center>
+        <button ion-button clear small color="danger" icon-left (click)="commentsPage(video.id.videoId)">
+          <ion-icon name='chatboxes'></ion-icon>
+          Comments
+        </button>
+      </ion-col>
+
+      <ion-col col-4 text-right>
+        <button ion-button clear small color="danger" icon-left (click)="shareInfo(video.snippet.title,video.id.videoId)">
+          <ion-icon name='share-alt'></ion-icon>  
+            Share
         </button>
       </ion-col>
     </ion-row>
+    <ion-grid>
+        <ion-row class="videostats">
+          <ion-col col-1></ion-col>
+          <ion-col col-2>
+            <ion-icon name="eye"><br>
+              <p>{{video.extra[0].statistics.viewCount | number}}</p>
+            </ion-icon>
+          </ion-col>
+          <ion-col col-2>
+            <ion-icon name="thumbs-up"><br>
+              <p>{{video.extra[0].statistics.likeCount | number}}</p>
+            </ion-icon>
+          </ion-col>
+          <ion-col col-2>
+            <ion-icon name="thumbs-down"><br>
+              <p>{{video.extra[0].statistics.dislikeCount| number}}</p>
+            </ion-icon>
+          </ion-col>
+          <ion-col col-2>
+            <ion-icon name="chatboxes"><br>
+              <p>{{video.extra[0].statistics.commentCount| number}}</p>
+            </ion-icon>
+          </ion-col>
+          <ion-col col-2>
+            <ion-icon name="menu" (click)="onDescriptionClick()"></ion-icon>
+          </ion-col>
+          <ion-col col-1></ion-col>          
+        </ion-row>
+      </ion-grid>
+    <ion-card-content style="white-space: pre-line;"> 
+      <ng-template #defaultDescription><div>{{video.snippet.description}}</div></ng-template>    
+      <div  *ngIf="descriptionClicked; else defaultDescription;" >
+        {{video.extra[0].snippet.description}}    
+      </div>
+    </ion-card-content>
 
   </ion-card>
 </ion-content>

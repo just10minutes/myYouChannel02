@@ -54,13 +54,29 @@ export class YouTubeApi3 {
         .get(`${URL_BASE}videos?part=id,snippet,contentDetails,statistics&id=${videoId}&key=${YT_API_KEY}`)
         .map((response: Response) => response.json())
             .catch(this._errorHandler); 
-
   }
 
+  getLatestComments(videoId){
+      return this
+        .http
+        .get(`${URL_BASE}commentThreads?maxResults=${MAX_RES}&order=time&part=snippet,replies&videoId=${videoId}&key=${YT_API_KEY}`)
+        .map((response: Response) => response.json())
+            .catch(this._errorHandler); 
+  }
+
+    getLatestCommentsPerPage(videoId,pageToken){
+      return this
+        .http
+        .get(`${URL_BASE}commentThreads?maxResults=${MAX_RES}&order=time&part=snippet,replies&videoId=${videoId}&pageToken=${pageToken}&key=${YT_API_KEY}`)
+        .map((response: Response) => response.json())
+            .catch(this._errorHandler); 
+  }
 
    _errorHandler(error: Response){
        console.error(error)
        return Observable.throw(error || "Server Error")
 
    }
+
+   
 }

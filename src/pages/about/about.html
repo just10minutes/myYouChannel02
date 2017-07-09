@@ -1,0 +1,27 @@
+<!--
+  Generated template for the AboutPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>     
+      {{channelInfo?channelInfo.snippet.title:'Title'}}        
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+  <ion-card-content style="white-space: pre-line;"> 
+  <img class="banner" [src]="channelInfo?channelInfo.brandingSettings.image.bannerMobileHdImageUrl:''" alt="Banner">
+  <p>About : {{channelInfo?channelInfo.snippet.title:'Title'}} </p>
+
+  <p> {{channelInfo?(channelInfo.statistics.subscriberCount | number) +' subscribers':'subscribers'}}  •  {{channelInfo?(channelInfo.statistics.viewCount | number) +' views':'views'}}   </p>
+  <p> Joined : {{channelInfo?(channelInfo.snippet.publishedAt | date: 'mediumDate' ): ('2001-01-01' | date: 'mediumDate')  }}</p>
+  
+  <p>Description:</p>
+  <p> {{channelInfo?channelInfo.snippet.description:'description'}}  </p>
+  </ion-card-content>
+  </ion-card>
+</ion-content>

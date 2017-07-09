@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
-import {YouTubeApi} from "../../shared/youtubeapi.service";
+//import {YouTubeApi} from "../../shared/youtubeapi.service";
 import {YouTubeApi3} from "../../shared/youtubeapi3.service";
-import {VideoPage, FavouritePage} from "../pages";
+import {VideoPage, FavouritePage, AboutPage} from "../pages";
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Storage } from '@ionic/storage';
 
@@ -17,8 +17,9 @@ export class HomePage {
   isFavExists:boolean;
   fav : any;
   favList: string;
-  
-  constructor(public navCtrl : NavController, public ytapi : YouTubeApi, public ytapi3 : YouTubeApi3, private socialSharing: SocialSharing, public storage: Storage) {   
+  descriptionClicked: boolean = false;
+  constructor(public navCtrl : NavController, //public ytapi : YouTubeApi, 
+      public ytapi3 : YouTubeApi3, private socialSharing: SocialSharing, public storage: Storage) {   
 
     this
       .ytapi3
@@ -80,22 +81,29 @@ export class HomePage {
        _loadError => this.errorMsg = _loadError);
   }
 
+  favouritePage(){
+      this.navCtrl.push(FavouritePage)
+    }
+  
+   aboutPage(){
+      this.navCtrl.push(AboutPage)
+    }
+
+
   shareInfo(title, videoId)
   {
     console.log(title,videoId);
-  this.socialSharing.share(title, title, "", "https://www.youtube.com/watch?v="+videoId).
-  then(() => {
-  alert("Sharing success");
-  // Success!
-  }).catch(() => {
-  // Error!
-  alert("Share failed");
-  });
-  }
+    this.socialSharing.share(title, title, "", "https://www.youtube.com/watch?v="+videoId).
+    then(() => {
+    alert("Sharing success");
+    // Success!
+    }).catch(() => {
+    // Error!
+    alert("Share failed");
+    });
+    }
 
-   favouritePage(){
-    this.navCtrl.push(FavouritePage)
-  }
+
 
 
   favouriteSet2(_video){
@@ -128,6 +136,8 @@ export class HomePage {
         }    
     });
 }
+
+
 /*
   favouriteSet(videoId,title){
     this.storage.get(videoId).then((dataExist) => {

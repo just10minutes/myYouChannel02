@@ -20,7 +20,8 @@
     <ion-thumbnail item-start>
       <img [src]="fav.snippet.thumbnails.high.url">
     </ion-thumbnail>
-      <p>{{fav.snippet.title}}</p>    
+      <p>{{fav.snippet.title}}</p>
+      <p style="font-size:12px;">Published On : {{fav.snippet.publishedAt | date: 'mediumDate'}} </p>    
     </button>  
 </ion-list>
 

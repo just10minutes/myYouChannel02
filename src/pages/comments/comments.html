@@ -1,0 +1,50 @@
+<!--
+  Generated template for the CommentsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Comments</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+<ion-list>
+  <ion-item *ngFor="let comment of videoComments">
+    <ion-avatar item-start>
+      <img src={{comment.snippet.topLevelComment.snippet.authorProfileImageUrl}}>
+    </ion-avatar>
+    <h3 style="white-space: pre-line; color:blue; margin-top: 0px;">{{comment.snippet.topLevelComment.snippet.authorDisplayName}}</h3>
+    <h4 style="white-space: pre-line;" [innerHTML]="comment.snippet.topLevelComment.snippet.textDisplay"></h4>
+    <p>{{comment.snippet.topLevelComment.snippet.publishedAt | date: 'mediumDate'}}</p>    
+    <p>Reply &middot;<span *ngIf="comment.snippet.likeCount != 0">{{comment.snippet.likeCount}}</span>
+    <span *ngIf="comment.snippet.totalReplyCount != 0">&nbsp;&nbsp; &middot; Show Replies</span></p>
+    <div *ngIf="comment.snippet.totalReplyCount != 0">
+      <ion-list>
+        <ion-item *ngFor="let reply of comment.replies.comments">
+          <ion-avatar item-start>
+            <img src={{reply.snippet.authorProfileImageUrl}}>
+          </ion-avatar>
+          <h3 style="white-space: pre-line; color:blue; margin-top: 0px;">{{reply.snippet.authorDisplayName}}</h3>
+          <h4 style="white-space: pre-line;" [innerHTML]="reply.snippet.textDisplay"></h4> 
+          <p>{{reply.snippet.publishedAt | date: 'mediumDate'}}</p>         
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-item>
+</ion-list>
+
+
+   <button *ngIf="pageToken" ion-button full color="primary" (click)="loadMoreComments()" icon-right>
+          Load More
+          <ion-icon name='download'></ion-icon>
+  </button>
+
+</ion-content>
