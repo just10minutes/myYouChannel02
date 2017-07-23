@@ -16,8 +16,10 @@ export class VideoPage {
   fav : any;
   favList: string;
   descriptionClicked: boolean = false;
+  showDetails : boolean = true;
   constructor(public navCtrl : NavController, public params : NavParams, public events : Events,private socialSharing: SocialSharing, public storage: Storage) {
     this.video = params.data;
+    console.log(this.video)
     /**
      * view all the params
      * https://developers.google.com/youtube/player_parameters
@@ -53,6 +55,7 @@ export class VideoPage {
     this
       .player
       .playVideo();
+      this.showDetails = false;//hidden  attribute used so condition is otherway around
   }
   pauseVideo() {
     this

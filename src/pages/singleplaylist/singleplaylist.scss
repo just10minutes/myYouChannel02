@@ -1,0 +1,49 @@
+page-singleplaylist {
+
+  .cards-bg {
+    background: #f2f2f2;
+  }
+  
+   .cards-bg > .fixed-content{
+     margin-top:17.5% !important;    
+  }
+
+  .cards-bg > .scroll-content{
+     margin-top:17.5% !important;    
+  }
+
+  .header-md::after,
+  .tabs-md[tabsPlacement="top"]>.tabbar::after,
+  .footer-md::before,
+  .tabs-md[tabsPlacement="bottom"]>.tabbar::before {
+    background: none;
+  }
+  
+  ion-card p {
+      font-size: 0.8em !important;
+  }
+  .card-title {
+    font-size: 1.0em !important;
+  }
+
+  .sixteen-nine {
+    position: relative;
+  }
+  .sixteen-nine:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: 56.25%;
+  }
+  .sixteen-nine > .content169 {
+    position: absolute;
+    top: -16.5%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow:hidden;
+  }
+}
+
+
+

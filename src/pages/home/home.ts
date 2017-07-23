@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 //import {YouTubeApi} from "../../shared/youtubeapi.service";
 import {YouTubeApi3} from "../../shared/youtubeapi3.service";
-import {VideoPage, FavouritePage, AboutPage} from "../pages";
+import {VideoPage, FavouritePage, AboutPage, PlaylistsPage} from "../pages";
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Storage } from '@ionic/storage';
 
@@ -89,6 +89,9 @@ export class HomePage {
       this.navCtrl.push(AboutPage)
     }
 
+  playListsPage(){
+    this.navCtrl.push(PlaylistsPage)
+  }
 
   shareInfo(title, videoId)
   {
@@ -135,6 +138,7 @@ export class HomePage {
         
         }    
     });
+
 }
 
 

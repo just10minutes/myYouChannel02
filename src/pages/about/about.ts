@@ -21,7 +21,7 @@ export class AboutPage {
       .getChannelInfo()
       .subscribe((data : any) => {
         this.channelInfo = data.items[0];
-        console.log(this.channelInfo)         
+        console.log(this.channelInfo)     
           
        }) 
       

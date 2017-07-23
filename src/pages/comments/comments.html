@@ -14,30 +14,63 @@
 
 
 <ion-content padding>
-
-
+<ion-fab top right edge>
+    <button ion-fab (click)="onAddNewCommentClick()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+    <form [hidden]="addNewComment" (ngSubmit)="uploadComment()">
+      <ion-item>        
+        <ion-textarea type="text" [(ngModel)]="comment_description" name="new_comment" placeholder="Your Valuable Comment Here"></ion-textarea>
+      </ion-item>
+      <button ion-button type="submit" block>Add New Comment</button>
+    </form>
 <ion-list>
-  <ion-item *ngFor="let comment of videoComments">
-    <ion-avatar item-start>
-      <img src={{comment.snippet.topLevelComment.snippet.authorProfileImageUrl}}>
-    </ion-avatar>
-    <h3 style="white-space: pre-line; color:blue; margin-top: 0px;">{{comment.snippet.topLevelComment.snippet.authorDisplayName}}</h3>
-    <h4 style="white-space: pre-line;" [innerHTML]="comment.snippet.topLevelComment.snippet.textDisplay"></h4>
-    <p>{{comment.snippet.topLevelComment.snippet.publishedAt | date: 'mediumDate'}}</p>    
-    <p>Reply &middot;<span *ngIf="comment.snippet.likeCount != 0">{{comment.snippet.likeCount}}</span>
-    <span *ngIf="comment.snippet.totalReplyCount != 0">&nbsp;&nbsp; &middot; Show Replies</span></p>
-    <div *ngIf="comment.snippet.totalReplyCount != 0">
-      <ion-list>
+  <ion-item *ngFor="let comment of videoComments; let i = index">
+    <ion-row>
+      <ion-col col-3>
+        <ion-avatar item-start>
+          <img src={{comment.snippet.topLevelComment.snippet.authorProfileImageUrl}}>
+        </ion-avatar>
+      </ion-col>
+      <ion-col col-9>
+          <h3 style="white-space: pre-line; color:blue; margin-top: 0px;">{{comment.snippet.topLevelComment.snippet.authorDisplayName}}</h3>
+          <h4 style="white-space: pre-line;" [innerHTML]="comment.snippet.topLevelComment.snippet.textDisplay"></h4>
+          <p>{{comment.snippet.topLevelComment.snippet.publishedAt | date: 'medium'}}</p>    
+          <!--<p>Reply &middot;<span *ngIf="comment.snippet.likeCount != 0">{{comment.snippet.topLevelComment.snippet.likeCount}}</span>-->
+          <p>
+          <span><ion-icon name="thumbs-up"></ion-icon> {{comment.snippet.topLevelComment.snippet.likeCount}}</span>
+          &nbsp;&nbsp;
+          <span *ngIf="comment.snippet.totalReplyCount != 0">&middot; 
+            <a href="#" (click)="onShowRepliesClick(i)"><ion-icon [name]="showReplies == i  ? 'arrow-dropup-circle': 'arrow-dropdown-circle'"></ion-icon></a>
+            &middot; {{comment.snippet.totalReplyCount}} 
+            </span>
+            &nbsp;&nbsp;
+            <a href="#" (click)="onAddNewReplyClick()"><ion-icon name="undo"></ion-icon></a> 
+          
+          </p>
+      </ion-col>
+    </ion-row>
+   <ion-row *ngIf="comment.snippet.totalReplyCount != 0">
+      <ion-list *ngIf="showReplies === i">              
         <ion-item *ngFor="let reply of comment.replies.comments">
-          <ion-avatar item-start>
-            <img src={{reply.snippet.authorProfileImageUrl}}>
-          </ion-avatar>
-          <h3 style="white-space: pre-line; color:blue; margin-top: 0px;">{{reply.snippet.authorDisplayName}}</h3>
-          <h4 style="white-space: pre-line;" [innerHTML]="reply.snippet.textDisplay"></h4> 
-          <p>{{reply.snippet.publishedAt | date: 'mediumDate'}}</p>         
+        <ion-row>
+          <ion-col col-3>
+            <ion-avatar item-start>
+              <img src={{reply.snippet.authorProfileImageUrl}}>
+            </ion-avatar>
+          </ion-col>
+          <ion-col col-9>
+            <h3 style="white-space: pre-line; color:blue; margin-top: 0px;">{{reply.snippet.authorDisplayName}}</h3>
+            <h4 style="white-space: pre-line;" [innerHTML]="reply.snippet.textDisplay"></h4> 
+            <p>{{reply.snippet.publishedAt | date: 'medium'}}</p>  
+            <p><a href="#" (click)="onAddNewReplyClick()">Reply</a> &middot;<span>{{reply.snippet.likeCount}}</span>
+          </ion-col> 
+        </ion-row>      
         </ion-item>
       </ion-list>
-    </div>
+    </ion-row>   
+    
   </ion-item>
 </ion-list>
 

@@ -23,7 +23,7 @@ export class YouTubeApi3 {
             .catch(this._errorHandler);
     }
 
-     getVideosByChannelID(channelId) {
+getVideosByChannelID(channelId) {
     return this
         .http
         .get(`${URL_BASE}search?order=date&part=id,snippet&channelId=${channelId}&key=${YT_API_KEY}`)
@@ -31,10 +31,10 @@ export class YouTubeApi3 {
             .catch(this._errorHandler);    
   }
 
-   getDefaultChannelVideos() {
+getDefaultChannelVideos() {
     return this
         .http
-        .get(`${URL_BASE}search?maxResults=${MAX_RES}&order=date&part=id,snippet&channelId=${CHANNEL_ID}&key=${YT_API_KEY}`)
+        .get(`${URL_BASE}search?type=video&maxResults=${MAX_RES}&order=date&part=id,snippet&channelId=${CHANNEL_ID}&key=${YT_API_KEY}`)
         .map((response: Response) => response.json())
             .catch(this._errorHandler);      
 
@@ -43,7 +43,7 @@ export class YouTubeApi3 {
   getVideosPerPage(pageToken) {
     return this
         .http
-        .get(`${URL_BASE}search?maxResults=${MAX_RES}&order=date&part=id,snippet&channelId=${CHANNEL_ID}&pageToken=${pageToken}&key=${YT_API_KEY}`)
+        .get(`${URL_BASE}search?type=video&maxResults=${MAX_RES}&order=date&part=id,snippet&channelId=${CHANNEL_ID}&pageToken=${pageToken}&key=${YT_API_KEY}`)
         .map((response: Response) => response.json())
             .catch(this._errorHandler);  
   }
@@ -72,6 +72,40 @@ export class YouTubeApi3 {
             .catch(this._errorHandler); 
   }
 
+  getDefaultPlaylist(){
+      return this
+        .http
+        .get(`${URL_BASE}playlists?part=snippet,contentDetails&channelId=${CHANNEL_ID}&maxResults=${MAX_RES}&key=${YT_API_KEY}`)
+        .map((response: Response) => response.json())
+            .catch(this._errorHandler);  
+  }
+
+loadMorePlayList(pageToken){
+    return this
+        .http
+        .get(`${URL_BASE}playlists?part=snippet,contentDetails&channelId=${CHANNEL_ID}&maxResults=${MAX_RES}&pageToken=${pageToken}&key=${YT_API_KEY}`)
+        .map((response: Response) => response.json())
+            .catch(this._errorHandler);
+
+}
+
+
+getSinglePlayList(playListId){
+     return this
+        .http
+        .get(`${URL_BASE}playlistItems?part=snippet,contentDetails&maxResults=${MAX_RES}&playlistId=${playListId}&key=${YT_API_KEY}`)
+        .map((response: Response) => response.json())
+            .catch(this._errorHandler);
+}
+
+loadMoreSinglePlayList(playListId,pageToken){
+    return this
+        .http
+        .get(`${URL_BASE}playlistItems?part=snippet,contentDetails&maxResults=${MAX_RES}&playlistId=${playListId}&pageToken=${pageToken}&key=${YT_API_KEY}`)
+        .map((response: Response) => response.json())
+            .catch(this._errorHandler);
+
+}
    _errorHandler(error: Response){
        console.error(error)
        return Observable.throw(error || "Server Error")
